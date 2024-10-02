@@ -1,12 +1,19 @@
-# Use an official Nginx runtime as a parent image
-FROM nginx:1.17.1-alpine
+# Stage 1: Build the Angular application
+FROM node:16 AS build
 
-# Copy custom Nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+WORKDIR /app
 
-# Copy built Angular app to Nginx's html directory
-COPY /dist/emileage /usr/share/nginx/html
+COPY package.json package-lock.json ./
+RUN npm install
 
+COPY . .
+RUN npm run build --prod
 
-# FROM nginx:alpine
-# COPY /dist/emileage /usr/share/nginx/html
+# Stage 2: Serve the application with Nginx
+FROM nginx:alpine
+
+COPY --from=build /app/dist/emileage /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
