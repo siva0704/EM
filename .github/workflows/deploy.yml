@@ -25,9 +25,9 @@ jobs:
       run: npm run build --if-present
 
     - name: Build Docker image
-      run: docker build -t your-dockerhub-username/emileage .
+      run: docker build -t vaibhavbg/emileage .
 
     - name: Push Docker image to Docker Hub
       run: |
-        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        docker push your-dockerhub-username/emileage
+        echo ${{ secrets.P4jkbnixj4@ }} | docker login -u ${{ secrets.vaibhavbg }} --password-stdin
+        docker push your-dockerhub-vaibhavbg/emileage
